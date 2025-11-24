@@ -1,0 +1,22 @@
+The Main Structure:
+    main.py
+        |--> app
+        |--> models.declarative_base.metadata.create_all(bind=engine) it is for creating database objects from python objects derived in schemas.py(models.py)
+        |--> class classname(BaseModel) this is for getting data through post request payload or getting query parameters
+        |-->@app.post/get/put/delete methods actual functions
+            |--> In the funtion parameters def create(abc : classname, db : Session(imported from sqlalchemy.orm) = Depends(function derived in database.py file which passes sessionmaker method as db) Depends is a method from fastapi)
+            |--> newdata = calling python class object of db from schemas.py/models.py schemas.Blog(col1 = abc.key1, col2 = abc.key2, col3 = abc.key3)
+            |--> inserting data to data -- db.add(newdata); db.commit(); db.refresh(newdata); return newdata.
+    
+    database.py -- Configuring database
+        |--> importing create_engine from sqlalchemy and Session, sessionmaker from sqlalchemy.orm
+        |--> creating db_url
+        |--> creating db_engine by passing db_url
+        |--> creating session by sessionmaker method by passing db engine
+        |--> defining get_db function to yield session created by sessionmaker method
+    
+    schemas.py or models.py -- Defining db table structure in python class object form
+        |--> import Column and datatype classes from sqlalchemy
+        |--> import declarative_base from sqlalchemy.ext.declarative
+        |--> create base from declarative_base
+        |--> define table class with Columns by mentioning datatypes of Columns

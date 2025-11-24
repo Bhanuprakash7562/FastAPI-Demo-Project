@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
-from database import engine, session, Session, get_db
+from database import engine, Session, get_db, text
 import schemas
 
 app = FastAPI()
@@ -25,3 +25,9 @@ def create(request : Blogdata, db : Session = Depends(get_db)):
     db.commit()
     db.refresh(newblog)
     return newblog
+
+@app.get("/get-blogdata")
+def get_data(db : Session = Depends(get_db)):
+    q = text('select * from public."blogDetails" order by id')
+    rows = db.execute(q).all()
+    return [dict(row._mapping) for row in rows]
