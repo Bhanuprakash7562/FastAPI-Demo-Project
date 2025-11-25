@@ -1,12 +1,18 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime
 
-base = declarative_base()
+
+class Blogdata(BaseModel):
+    title : str
+    body : str
+    published_at : Optional[datetime] = None
+    
+    class config:
+        orm_mode = True
 
 
-class Blog(base):
-    __tablename__ = "blogDetails"
-    id = Column(Integer, primary_key=True, nullable=False, index=True)
-    title = Column(String, nullable=False)
-    body = Column(String, nullable=False)
-    date = Column(DateTime(timezone=False),nullable=True)
+class Users(BaseModel):
+    name : str
+    email : str
+    password : str
