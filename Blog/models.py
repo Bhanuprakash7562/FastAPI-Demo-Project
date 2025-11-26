@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -11,6 +11,9 @@ class Blog(base):
     title = Column(String, nullable=False)
     body = Column(String, nullable=False)
     date = Column(DateTime(timezone=False),nullable=True)
+    user_id = Column(Integer, ForeignKey("Users.id"))
+    
+    creator = Relationship("Users", back_populates="blogs")
 
 class Users(base):
     __tablename__ = "Users"
@@ -18,3 +21,5 @@ class Users(base):
     name = Column(String, nullable=False)
     email = Column(String, nullable=False)
     password = Column(String, nullable=False)
+    
+    blogs = Relationship("Blog", back_populates="creator")
