@@ -9,7 +9,7 @@ class Blogdata(BaseModel):
     published_at : Optional[datetime] = None
     used_id : int
     
-    class config:
+    class Config:
         orm_mode = True
 
 
@@ -22,5 +22,13 @@ class login(BaseModel):
     username : str
     password : str
     
-    class config:
+    class Config:
         orm_mode = True
+
+
+class TokenData(BaseModel):
+    sub: Optional[str] = None
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"

@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from .. import database, schemas, models
+from . import login
+from datetime import datetime
 
 router = APIRouter(prefix="/blogs", tags=["BLOGS"])
 
 @router.get("/get-Blogs")
-def get_data(db : database.Session = Depends(database.get_db)):
+def get_data(db : database.Session = Depends(database.get_db), current_user : models.Users = Depends(login.get_current_user)):
     q = database.text('select * from public."blogDetails" order by id')
     rows = db.execute(q).all()
     return [dict(row._mapping) for row in rows]
