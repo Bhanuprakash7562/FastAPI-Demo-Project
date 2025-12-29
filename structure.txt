@@ -23,8 +23,20 @@ The Main Structure:
 
 
 Authentication and Autherization:
-Step 1 :- User logins with credentials(Username/Password).
-Step 2 :- Application checks the credentials are exists or not. If exists a JWT will be generated with the respective access to the endpoints and expiry. Then it will be sent back to user.
-Step 3 :- User stores the JWT in cache or local system.
-Step 4 :- User calls the respective API endpoints with payload and JWT in headers.
-Step 5 :- Application verifies that JWT is valid or not, if it is valid it allows the api call otherwise raises an HTTP error response.
+API Keys:
+	Step 1 :- Static API keys will be defined in application server and will be shared privately with client.
+	Step 2 :- Client server will call the application server API endpoints by passing the API keys in headers.
+	Step 3 :- Application verifies the API keys sent by the client, If they are valid application gives the response otherwise raises error response.
+JWT:
+	Step 1 :- User logins with credentials(Username/Password).
+	Step 2 :- Application checks the credentials are exists or not. If exists a JWT will be generated with the respective access to the endpoints and 		  expiry. Then it will be sent back to user.
+	Step 3 :- User stores the JWT in cache or local system.
+	Step 4 :- User calls the respective API endpoints with payload and JWT in headers.
+	Step 5 :- Application verifies that JWT is valid or not, if it is valid it allows the api call otherwise raises an HTTP error response.
+OAuth:
+	defination:- Giving Access for the resources in the Application server to third party applications without sharing the User credentials directly.
+	Step 1 :- User request access to thrid party application and this third party applications requires logging in.
+	Step 2 :- Instead of creating new account in this third party application, we can request for OAuth code from the third party application to 		  our application server.
+	Step 3 :- Upon granting permission to the request in Application server an OAuth Code will be generated using the existing credentials in 		  Application server.
+	Step 4 :- OAuth Code will be sent back to the third party application, So that it will exchage this OAuth code for access token with Application 		  	  server.
+	Step 5 :- Third Party App will use this Access token to access the resources from application server.
